@@ -1,0 +1,37 @@
+{
+  "name": "My first workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "content": "## For all the shortcuts Link.\n**Double click** to edit me. \n\n[shortcuts](https://docs.n8n.io/keyboard-shortcuts/)"
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -32,
+        32
+      ],
+      "typeVersion": 1,
+      "id": "9fc12d22-4775-4bd4-99b4-2845fd614511",
+      "name": "Sticky Note"
+    }
+  ],
+  "pinData": {},
+  "connections": {},
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "204e3ae9-44f9-40d9-848b-188d84485e4b",
+  "meta": {
+    "instanceId": "dc92a16d3037a1fc00172816f239e2e533ed5fada5ad8e3e5205986229aeb4e9"
+  },
+  "id": "c3xCzfkCxCSlGckQ",
+  "tags": [
+    {
+      "name": "#learnn8n",
+      "id": "2eMaXUb2E9Js0YRI",
+      "createdAt": "2025-09-24T13:50:08.172Z",
+      "updatedAt": "2025-09-24T13:50:08.172Z"
+    }
+  ]
+}
