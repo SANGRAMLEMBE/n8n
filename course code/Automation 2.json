@@ -1,0 +1,360 @@
+{
+  "name": "Automation 2",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "ec2a1fdf-d8ad-43f4-a90f-907fe250646c",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1rMmv-g5vwbTLVCSkU4TGc2m748QHQ9PF5dG2dpY_cIo",
+          "mode": "list",
+          "cachedResultName": "Potential_customers",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1rMmv-g5vwbTLVCSkU4TGc2m748QHQ9PF5dG2dpY_cIo/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1rMmv-g5vwbTLVCSkU4TGc2m748QHQ9PF5dG2dpY_cIo/edit#gid=0"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        208,
+        0
+      ],
+      "id": "dfc18286-b07d-48f9-8958-624f9302efe6",
+      "name": "Get row(s) in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "OAObPeTilJfyaBjK",
+          "name": "Google Sheets account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "https://api.genderize.io/?name=sangram",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "Name",
+              "value": "={{ $json['NAME '] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        416,
+        0
+      ],
+      "id": "ce9d8869-1a14-41da-b230-df7a6a808eda",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "url": "https://api.nationalize.io/?name=sangram",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "=Name",
+              "value": "={{ $json.name }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        624,
+        0
+      ],
+      "id": "45dccf39-d914-4bea-932a-1eb61fa92d5f",
+      "name": "HTTP Request1"
+    },
+    {
+      "parameters": {
+        "url": "https://api.agify.io/?name=sangram",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "Name",
+              "value": "={{ $('Get row(s) in sheet').item.json['NAME '] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        848,
+        0
+      ],
+      "id": "16ed539c-aa2e-4f4d-a265-923a0741fbe8",
+      "name": "HTTP Request2"
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "1rMmv-g5vwbTLVCSkU4TGc2m748QHQ9PF5dG2dpY_cIo",
+          "mode": "list",
+          "cachedResultName": "Potential_customers",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1rMmv-g5vwbTLVCSkU4TGc2m748QHQ9PF5dG2dpY_cIo/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1rMmv-g5vwbTLVCSkU4TGc2m748QHQ9PF5dG2dpY_cIo/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "ID": "={{ $('Get row(s) in sheet').item.json.ID }}",
+            "NAME ": "={{ $('Get row(s) in sheet').item.json['NAME '] }}",
+            "NUMBER": "={{ $('Get row(s) in sheet').item.json.NUMBER }}",
+            "NATIONALITY ": "={{ $('HTTP Request1').item.json.country[1].country_id }}",
+            "Age": "={{ $json.age }}",
+            "GENDER": "={{ $('HTTP Request').item.json.gender }}",
+            "BUDGET": "={{ $('Get row(s) in sheet').item.json.BUDGET }}"
+          },
+          "matchingColumns": [
+            "NAME "
+          ],
+          "schema": [
+            {
+              "id": "ID",
+              "displayName": "ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "NAME ",
+              "displayName": "NAME ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "NUMBER",
+              "displayName": "NUMBER",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "BUDGET",
+              "displayName": "BUDGET",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "GENDER",
+              "displayName": "GENDER",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "NATIONALITY ",
+              "displayName": "NATIONALITY ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Age",
+              "displayName": "Age",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1056,
+        0
+      ],
+      "id": "2dcadbb4-9267-4ac0-9a95-b9403330f55f",
+      "name": "Append or update row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "OAObPeTilJfyaBjK",
+          "name": "Google Sheets account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "fishermanking05@gmail.com",
+        "subject": "New Client",
+        "message": "=hey Buddy, You get new Client!!\n\nnew client {{ $json['NAME '] }} has signed up, below are the details.\n\nnumber: {{ $json.NUMBER }} \nBuget: {{ $json.BUDGET }}\n\nbelow is the expected age , gender and nationality\n\nAge : {{ $json.Age }}\nNationality: {{ $json['NATIONALITY '] }}\nGender:{{ $json.GENDER }}\n\nso make sure to connect with him at {{ $json.NUMBER }}\n\nThanks, \nYour Awesome Workflow",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        1264,
+        0
+      ],
+      "id": "2135423f-1c43-4ce1-9c77-d78cbf4e6221",
+      "name": "Send a message",
+      "webhookId": "39f605e9-f7aa-480b-9181-0e9dc191882d",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "b7MgbP2YUgz5Q0Lf",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.3,
+      "position": [
+        -16,
+        224
+      ],
+      "id": "71b227ea-5b33-463e-9c6b-c804011bce69",
+      "name": "On form submission",
+      "webhookId": "f88bb63d-c19f-4fbf-b16d-bb22940bf2ae"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Get row(s) in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s) in sheet": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request1": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request2": {
+      "main": [
+        [
+          {
+            "node": "Append or update row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append or update row in sheet": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "19e4ca16-db75-4805-a3f6-0403f6806151",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "dc92a16d3037a1fc00172816f239e2e533ed5fada5ad8e3e5205986229aeb4e9"
+  },
+  "id": "HZMUF2OuhkKPqAO0",
+  "tags": [
+    {
+      "createdAt": "2025-09-24T13:50:08.172Z",
+      "updatedAt": "2025-09-24T13:50:08.172Z",
+      "id": "2eMaXUb2E9Js0YRI",
+      "name": "#learnn8n"
+    }
+  ]
+}
