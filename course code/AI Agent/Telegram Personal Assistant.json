@@ -1,0 +1,82 @@
+{
+  "name": "Telegram Personal Assistant",
+  "nodes": [
+    {
+      "parameters": {
+        "updates": [
+          "message"
+        ],
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -400,
+        -176
+      ],
+      "id": "777ea803-1f98-46f2-bc1b-ea286b8356ac",
+      "name": "Telegram Trigger",
+      "webhookId": "cd942205-bee7-48e0-973c-0a7b92bebb9a",
+      "credentials": {
+        "telegramApi": {
+          "id": "EhPQ0o5OfXTmU3ql",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $json.message.chat.id }}",
+        "text": "bro got it",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        -192,
+        -176
+      ],
+      "id": "695f6249-1b0b-4ee6-8a6a-8317e0d39a98",
+      "name": "Send a text message",
+      "webhookId": "ab55483b-59ca-4d07-9fe9-8ad863bb3a1f",
+      "credentials": {
+        "telegramApi": {
+          "id": "EhPQ0o5OfXTmU3ql",
+          "name": "Telegram account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Telegram Trigger": {
+      "main": [
+        [
+          {
+            "node": "Send a text message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "cbcbaac3-66e3-48ec-9606-a432b46d757a",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "dc92a16d3037a1fc00172816f239e2e533ed5fada5ad8e3e5205986229aeb4e9"
+  },
+  "id": "M9VqpKcKv4N6fDMo",
+  "tags": [
+    {
+      "name": "#telegram",
+      "id": "iZyX9omWwRmFuJUp",
+      "createdAt": "2025-10-07T08:46:15.758Z",
+      "updatedAt": "2025-10-07T08:46:15.758Z"
+    }
+  ]
+}
